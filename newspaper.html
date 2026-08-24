@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Newspaper</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			padding: 20px;
+			background: #d9d3c7;
+			font-family: Georgia, "Times New Roman", serif;
+			color: #111;
+		}
+
+		.paper {
+			max-width: 1100px;
+			margin: 0 auto;
+			background: #f7f2e8;
+			border: 2px solid #111;
+			padding: 18px;
+		}
+
+		.masthead {
+			text-align: center;
+			border-top: 4px solid #111;
+			border-bottom: 4px solid #111;
+			padding: 12px 0;
+			margin-bottom: 16px;
+		}
+
+		.masthead h1 {
+			margin: 0;
+			font-size: 56px;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+		}
+
+		.meta {
+			display: flex;
+			justify-content: space-between;
+			gap: 10px;
+			font-size: 14px;
+			border-bottom: 1px solid #111;
+			padding-bottom: 8px;
+			margin-bottom: 16px;
+		}
+
+		.content {
+			display: grid;
+			grid-template-columns: 2fr 1fr;
+			gap: 18px;
+		}
+
+		.story {
+			columns: 2;
+			column-gap: 18px;
+		}
+
+		.story h2 {
+			column-span: all;
+			margin: 0 0 10px;
+			font-size: 30px;
+			line-height: 1.1;
+		}
+
+		.story p {
+			margin: 0 0 12px;
+			text-align: justify;
+			line-height: 1.6;
+			font-size: 17px;
+		}
+
+		.sidebar {
+			border-left: 1px solid #111;
+			padding-left: 16px;
+		}
+
+		.image-box {
+			border: 2px solid #111;
+			padding: 8px;
+			background: #fff;
+			margin-bottom: 14px;
+		}
+
+		.image-box img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+
+		.caption {
+			font-size: 14px;
+			margin-top: 8px;
+			text-align: center;
+		}
+
+		.sidebar h3 {
+			margin: 0 0 8px;
+			font-size: 22px;
+			border-bottom: 1px solid #111;
+			padding-bottom: 6px;
+		}
+
+		.sidebar p {
+			margin: 0 0 12px;
+			line-height: 1.6;
+			text-align: justify;
+			font-size: 16px;
+		}
+
+		.bottom-strip {
+			margin-top: 16px;
+			border-top: 2px solid #111;
+			padding-top: 10px;
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 14px;
+		}
+
+		.box {
+			border: 1px solid #111;
+			padding: 10px;
+		}
+
+		.box h4 {
+			margin: 0 0 8px;
+			font-size: 18px;
+		}
+
+		.box p {
+			margin: 0;
+			font-size: 15px;
+			line-height: 1.5;
+			text-align: justify;
+		}
+
+		@media (max-width: 800px) {
+			.content,
+			.bottom-strip {
+				grid-template-columns: 1fr;
+			}
+
+			.story {
+				columns: 1;
+			}
+
+			.sidebar {
+				border-left: 0;
+				padding-left: 0;
+				border-top: 1px solid #111;
+				padding-top: 16px;
+			}
+
+			.masthead h1 {
+				font-size: 38px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="paper">
+		<div class="masthead">
+			<h1>Daily News</h1>
+		</div>
+
+		<div class="meta">
+			<div>Vol. 1</div>
+			<div>Monday Edition</div>
+			<div>City Desk</div>
+		</div>
+
+		<div class="content">
+			<div class="story">
+				<h2>Shinchan Brings Joy to the Neighborhood</h2>
+				<p>
+					A small and simple newspaper page with bold headlines, clean lines, and a classic
+					column layout gives the page a traditional print look.
+				</p>
+				<p>
+					The main story uses two columns so the text feels like a real newspaper article.
+					The layout stays basic and easy to read, with a light paper background and dark text.
+				</p>
+				<p>
+					On the right side, the image of Shinchan is placed inside a plain framed box.
+					This keeps the page balanced while keeping the design simple and focused.
+				</p>
+				<p>
+					The bottom section has a few small boxes for extra short news items, just like a
+					newspaper page with side notes and brief updates.
+				</p>
+			</div>
+
+			<div class="sidebar">
+				<div class="image-box">
+					<img src="shinchan.jpg" alt="Shinchan">
+					<div class="caption">Shinchan featured image</div>
+				</div>
+
+				<h3>Today’s Brief</h3>
+				<p>
+					This layout uses only HTML and CSS and keeps the structure plain and basic.
+				</p>
+				<p>
+					It is made to look like a simple newspaper page without extra decoration.
+				</p>
+			</div>
+		</div>
+
+		<div class="bottom-strip">
+			<div class="box">
+				<h4>Local</h4>
+				<p>Community members gathered for a quiet morning update with simple headlines.</p>
+			</div>
+			<div class="box">
+				<h4>Sports</h4>
+				<p>Fresh news appears in short blocks to keep the page looking like a newspaper.</p>
+			</div>
+			<div class="box">
+				<h4>Weather</h4>
+				<p>Clear layout and basic styling make the newspaper page easy to scan.</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
