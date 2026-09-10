@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pseudo Classes</title>
+    <style>
+        input:required{
+            border-color: red;
+        }
+        input:optional{
+            border-color: green;
+        }
+        input:disabled{
+            background-color: #959393;
+            border-color: #959393;
+        }
+        input:valid{
+            background-color: #3ebb3e;
+        }
+        input:invalid{
+            background-color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required/>
+        <br><br>
+        <label for="lname">Last Name:</label>
+        <input type="text" id="lname" name="lname" optional/>
+        <br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required/>
+        <br><br>
+        <label for="location">Location:</label>
+        <input type="location" id="location" name="location" placeholder="Mathura" disabled/>
+        
+    </form>
+</body>
+</html>

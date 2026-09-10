@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            background-color: rgb(151, 70, 222);
+        }
+        .container{
+            background-color: rgb(242, 255, 0);
+            padding: 20px;
+            margin: 20px;
+        }
+        section h2{
+            color:rgb(3, 3, 1);
+            text-shadow: 1px 1px 0 black;
+        }
+        h2+p{
+            color:blue;
+            text-transform: uppercase;
+        }
+        h2-p{
+            text-transform: uppercase;
+        }
+        button{
+            background-color: aqua;
+            border-radius: 5px;
+            height: 40px;
+            width: 80px;
+            &:hover{ 
+                background-color: rgb(13, 223, 24);
+                height: 500px;
+                width: 1000px;
+                border-radius: 5px;
+                /* align-items: center; */
+                justify-content: center;
+
+            }
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h2>heading </h2>
+        <p>this is a paragraph</p>
+        <p>this is second paragraph</p>
+        <div class="container">
+            <h2>heading 2</h2>
+        </div>
+
+    </section>
+    <button>click me</button>
+    <ul>
+        <li></li>
+    </ul>
+    
+</body>
+</html>
