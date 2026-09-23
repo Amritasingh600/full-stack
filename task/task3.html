@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Analytics Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+      background: #f1f5f9;
+    }
+
+    .sidebar {
+      width: 240px;
+      background: #0f172a;
+      color: #cbd5e1;
+      padding: 20px 16px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #fff;
+      padding: 8px 10px 18px;
+    }
+
+    .brand-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #cbd5e1;
+      text-decoration: none;
+    }
+
+    .nav-item.active {
+      background: #4f46e5;
+      color: #fff;
+    }
+
+    .nav-icon {
+      width: 18px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 10px 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin-top: 12px;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f8d38d, #c084fc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0f172a;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .profile-name {
+      font-size: 14px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .profile-role {
+      font-size: 12px;
+      color: #cbd5e1;
+      opacity: 0.8;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 64px;
+      background: rgba(255,255,255,0.7);
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      gap: 16px;
+    }
+
+    .hamburger {
+      display: none;
+      width: 38px;
+      height: 38px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      background: white;
+      font-size: 20px;
+      color: #0f172a;
+    }
+
+    .search {
+      flex: 1;
+      max-width: 520px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 10px;
+      color: #64748b;
+    }
+
+    .search input {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 14px;
+      color: #0f172a;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0f172a;
+      font-size: 16px;
+    }
+
+    .user-pill {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f8d38d, #c084fc);
+      border: 2px solid #fff;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+    }
+
+    .content {
+      padding: 32px;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 24px;
+      color: #0f172a;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      min-height: 110px;
+    }
+
+    .kpi-left {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .kpi-label {
+      font-size: 14px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+
+    .trend {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .kpi-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eef2ff;
+      color: #4f46e5;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .analytics {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      font-weight: 600;
+      font-size: 16px;
+      color: #0f172a;
+    }
+
+    .chart-box {
+      height: 220px;
+      border-radius: 10px;
+      background: linear-gradient(to top, rgba(79,70,229,0.05), rgba(79,70,229,0.02));
+      border: 1px solid #eef2ff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chart-box svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 420px;
+      border-collapse: collapse;
+      font-size: 14px;
+      color: #334155;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px 10px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+      color: #64748b;
+      font-weight: 600;
+      background: #f8fafc;
+    }
+
+    td.status {
+      font-weight: 600;
+    }
+
+    .status.delivered {
+      color: #16a34a;
+    }
+
+    .status.processing {
+      color: #d97706;
+    }
+
+    .status.shipped {
+      color: #4f46e5;
+    }
+
+    .status.cancelled {
+      color: #dc2626;
+    }
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .bars {
+      height: 180px;
+      display: flex;
+      align-items: end;
+      gap: 10px;
+      padding-top: 20px;
+    }
+
+    .bar {
+      flex: 1;
+      background: linear-gradient(to top, #4f46e5, #7c8cff);
+      border-radius: 8px 8px 0 0;
+      min-height: 20px;
+      position: relative;
+    }
+
+    .bar span {
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .product-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .product-table th,
+    .product-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+    }
+
+    .change.up {
+      color: #16a34a;
+      font-weight: 600;
+    }
+
+    .change.down {
+      color: #dc2626;
+      font-weight: 600;
+    }
+
+    @media (max-width: 980px) {
+      .sidebar {
+        display: none;
+      }
+
+      .hamburger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .analytics,
+      .lower-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .topbar {
+        width: 100%;
+        padding: 0 16px;
+      }
+
+      .content {
+        padding: 20px 16px 24px;
+      }
+
+      .kpis {
+        grid-template-columns: 1fr;
+      }
+
+      .card,
+      .kpi-card {
+        border-radius: 10px;
+      }
+
+      .search {
+        max-width: none;
+      }
+
+      .main {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div>
+        <div class="brand">
+          <div class="brand-icon">A</div>
+          <span>AdminPro</span>
+        </div>
+
+        <nav class="nav">
+          <a href="#" class="nav-item active"><span class="nav-icon">⌂</span> Dashboard</a>
+          <a href="#" class="nav-item"><span class="nav-icon">◫</span> Analytics</a>
+          <a href="#" class="nav-item"><span class="nav-icon">◌</span> Users</a>
+          <a href="#" class="nav-item"><span class="nav-icon">▣</span> Orders</a>
+          <a href="#" class="nav-item"><span class="nav-icon">◭</span> Products</a>
+          <a href="#" class="nav-item"><span class="nav-icon">⚙</span> Settings</a>
+        </nav>
+      </div>
+
+      <div class="profile">
+        <div class="avatar">AT</div>
+        <div>
+          <div class="profile-name">Ayush Tiwari</div>
+          <div class="profile-role">Admin</div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="hamburger">☰</button>
+
+        <div class="search">
+          <span>⌕</span>
+          <input type="text" placeholder="Search..." />
+        </div>
+
+        <div class="top-actions">
+          <button class="icon-btn">🔔</button>
+          <button class="icon-btn">☰</button>
+          <div class="user-pill"></div>
+        </div>
+      </header>
+
+      <div class="content">
+        <h1 class="page-title">Dashboard</h1>
+
+        <section class="kpis">
+          <div class="kpi-card">
+            <div class="kpi-left">
+              <div class="kpi-label">Total Revenue</div>
+              <div class="kpi-value">₹1,24,532</div>
+            </div>
+            <div class="kpi-icon">💰</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-left">
+              <div class="kpi-label">Total Orders</div>
+              <div class="kpi-value">892</div>
+            </div>
+            <div class="kpi-icon">🧾</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-left">
+              <div class="kpi-label">Active Users</div>
+              <div class="kpi-value">3,521</div>
+            </div>
+            <div class="kpi-icon">👥</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-left">
+              <div class="kpi-label">Conversion Rate</div>
+              <div class="kpi-value">4.2%</div>
+            </div>
+            <div class="kpi-icon">📈</div>
+          </div>
+        </section>
+
+        <section class="analytics">
+          <div class="card">
+            <div class="card-head">
+              <span>Revenue Overview</span>
+              <span class="trend">+12%</span>
+            </div>
+            <div class="chart-box">
+              <svg viewBox="0 0 600 220" preserveAspectRatio="none" aria-label="Revenue chart">
+                <path d="M0 180 C80 150, 150 160, 200 120 S300 90, 360 110 S470 120, 600 50 L600 220 L0 220 Z" fill="rgba(79,70,229,0.08)"></path>
+                <path d="M0 180 C80 150, 150 160, 200 120 S300 90, 360 110 S470 120, 600 50" fill="none" stroke="#4f46e5" stroke-width="3" stroke-linecap="round"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <span>Recent Orders</span>
+              <span style="color:#64748b; font-size:13px;">View all</span>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Rahul Sharma</td>
+                    <td>₹2,499</td>
+                    <td class="status delivered">Delivered</td>
+                  </tr>
+                  <tr>
+                    <td>Priya Singh</td>
+                    <td>₹4,999</td>
+                    <td class="status processing">Processing</td>
+                  </tr>
+                  <tr>
+                    <td>Amit Kumar</td>
+                    <td>₹1,299</td>
+                    <td class="status shipped">Shipped</td>
+                  </tr>
+                  <tr>
+                    <td>Neha Gupta</td>
+                    <td>₹3,799</td>
+                    <td class="status delivered">Delivered</td>
+                  </tr>
+                  <tr>
+                    <td>Sahil Verma</td>
+                    <td>₹2,499</td>
+                    <td class="status cancelled">Cancelled</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="lower-grid">
+          <div class="card">
+            <div class="card-head">
+              <span>Traffic Overview</span>
+              <span class="trend" style="background:#dbeafe; color:#2563eb;">+18%</span>
+            </div>
+
+            <div class="bars">
+              <div class="bar" style="height: 42%;"><span>Mon</span></div>
+              <div class="bar" style="height: 58%;"><span>Tue</span></div>
+              <div class="bar" style="height: 48%;"><span>Wed</span></div>
+              <div class="bar" style="height: 66%;"><span>Thu</span></div>
+              <div class="bar" style="height: 76%;"><span>Fri</span></div>
+              <div class="bar" style="height: 55%;"><span>Sat</span></div>
+              <div class="bar" style="height: 64%;"><span>Sun</span></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <span>Top Products</span>
+              <span style="color:#64748b; font-size:13px;">View all</span>
+            </div>
+
+            <table class="product-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Sales</th>
+                  <th>Change</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Laptop Pro</td>
+                  <td>2,450</td>
+                  <td class="change up">+12%</td>
+                </tr>
+                <tr>
+                  <td>Wireless Earbuds</td>
+                  <td>1,892</td>
+                  <td class="change up">+8%</td>
+                </tr>
+                <tr>
+                  <td>Smart Watch</td>
+                  <td>1,203</td>
+                  <td class="change up">+6%</td>
+                </tr>
+                <tr>
+                  <td>Backpack</td>
+                  <td>992</td>
+                  <td class="change up">+4%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
