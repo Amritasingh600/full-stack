@@ -1,0 +1,8 @@
+@import "tailwindcss";
+.heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-align: center;
+    color: #3b82f6;
+}

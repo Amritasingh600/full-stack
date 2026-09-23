@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowTask Landing Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #edf0f3;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: #1f2f3d;
+    }
+
+    .page {
+      width: 1280px;
+      max-width: 96%;
+      min-height: 880px;
+      margin: 30px auto;
+      background: #f3f4f6;
+      border: 1px solid #dfe4ea;
+      border-radius: 18px;
+      padding: 0 24px 26px;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 10px 18px;
+      border-bottom: 1px solid #e3e7eb;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .brand-mark {
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(135deg, #4a79ff, #7d63ff);
+      border-radius: 6px;
+      position: relative;
+      transform: rotate(45deg);
+      display: inline-block;
+    }
+
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 3px;
+      top: 4px;
+      left: 4px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: #3d4d5e;
+      font-size: 14px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #3e4b5c;
+      font-weight: 500;
+    }
+
+    .nav a:hover {
+      color: #0d1b2a;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      border: 1px solid #c8d3df;
+      background: #fff;
+      color: #273d4f;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn.primary {
+      background: linear-gradient(180deg, #5a75ff, #4b80ff);
+      border-color: #5072ff;
+      color: #fff;
+      box-shadow: 0 3px 8px rgba(79, 114, 255, 0.25);
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 36px;
+      padding: 36px 10px 12px;
+    }
+
+    .hero-text {
+      flex: 1.1;
+      padding-right: 14px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b7a8b;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 58px;
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+      color: #1d2c3c;
+      font-weight: 800;
+    }
+
+    .highlight {
+      display: block;
+      margin-top: 6px;
+    }
+
+    .hero-copy {
+      margin-top: 18px;
+      max-width: 520px;
+      font-size: 20px;
+      line-height: 1.5;
+      color: #53657a;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .hero-actions .btn {
+      min-width: 150px;
+      height: 48px;
+      padding: 0 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .secondary {
+      background: #fff;
+      border: 1px solid #c9d4df;
+      color: #273d4f;
+    }
+
+    .visual-wrap {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 420px;
+      position: relative;
+    }
+
+    .visual {
+      position: relative;
+      width: 520px;
+      height: 310px;
+      background: rgba(139, 173, 255, 0.12);
+      border-radius: 48% 52% 46% 54% / 50% 51% 49% 50%;
+      border: 1px solid rgba(105, 139, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .chart-card {
+      width: 340px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid #dfe7f0;
+      border-radius: 20px;
+      padding: 14px 16px 10px;
+      box-shadow: 0 12px 24px rgba(120, 144, 180, 0.08);
+      position: relative;
+    }
+
+    .mini-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: #485a70;
+    }
+
+    .mini-profiles {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      margin-left: -6px;
+      background: linear-gradient(135deg, #9cb4ff, #c8d6ff);
+    }
+
+    .avatar:first-child {
+      margin-left: 0;
+    }
+
+    .chart-area {
+      position: relative;
+      height: 150px;
+      background: linear-gradient(180deg, rgba(172, 199, 255, 0.12), rgba(255,255,255,0.14));
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .chart-area::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(to right, rgba(120, 143, 179, 0.16) 1px, transparent 1px),
+                        linear-gradient(to top, rgba(120, 143, 179, 0.16) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .line {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 24px;
+      height: 80px;
+      border-bottom: 3px solid #5d77ff;
+      border-left: 3px solid transparent;
+      transform: skewX(-12deg);
+      border-radius: 10px;
+      opacity: 0.9;
+    }
+
+    .line::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(93, 119, 255, 0.18), rgba(93, 119, 255, 0));
+      clip-path: polygon(0 100%, 0 70%, 20% 60%, 36% 68%, 52% 24%, 70% 40%, 88% 10%, 100% 25%, 100% 100%);
+    }
+
+    .chart-badges {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 14px;
+      font-size: 11px;
+      color: #73829a;
+    }
+
+    .feature-head {
+      text-align: center;
+      margin-top: 12px;
+      margin-bottom: 18px;
+    }
+
+    .feature-head h2 {
+      margin: 0;
+      font-size: 36px;
+      letter-spacing: -0.04em;
+      color: #1f2d3a;
+    }
+
+    .feature-head p {
+      margin: 8px 0 0;
+      color: #5c697b;
+      font-size: 18px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(200px, 1fr));
+      gap: 18px;
+      padding: 12px 0 6px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.28);
+      border: 1px solid #d8e0ea;
+      border-radius: 18px;
+      padding: 24px 18px 18px;
+      text-align: center;
+      min-height: 190px;
+    }
+
+    .icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #f0f5ff;
+      color: #4b73ff;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      border: 1px solid #dfe8ff;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #1f2d3a;
+    }
+
+    .card p {
+      margin: 0;
+      color: #586c7d;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 980px) {
+      .page {
+        padding: 0 18px 22px;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-text {
+        padding-right: 0;
+      }
+
+      .hero-copy {
+        max-width: 100%;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      h1 {
+        font-size: 42px;
+      }
+
+      .topbar {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .top-actions {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .visual {
+        width: 100%;
+        height: 260px;
+      }
+
+      .chart-card {
+        width: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span>FlowTask</span>
+      </div>
+
+      <nav class="nav">
+        <a href="#">Features</a>
+        <a href="#">Pricing</a>
+        <a href="#">Docs</a>
+      </nav>
+
+      <div class="top-actions">
+        <button class="btn">Login</button>
+        <button class="btn primary">Get Started</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-text">
+          <div class="eyebrow">FlowTask</div>
+          <h1>
+            Build Better Products
+            <span class="highlight">Faster With Our Platform</span>
+          </h1>
+          <p class="hero-copy">
+            Streamline your workflow, collaborate with your team, and ship faster with our all-in-one platform.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn primary">Get Started</button>
+            <button class="btn secondary">View Demo</button>
+          </div>
+        </div>
+
+        <div class="visual-wrap">
+          <div class="visual">
+            <div class="chart-card">
+              <div class="mini-header">
+                <div class="mini-profiles">
+                  <span class="avatar"></span>
+                  <span class="avatar"></span>
+                  <span class="avatar"></span>
+                </div>
+                <span>New Project</span>
+              </div>
+
+              <div class="chart-area">
+                <div class="line"></div>
+              </div>
+
+              <div class="chart-badges">
+                <span>Productivity</span>
+                <span>82% completion</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature-head">
+        <h2>Powerful Features</h2>
+        <p>Everything you need to build, manage and grow your product.</p>
+      </section>
+
+      <section class="feature-grid">
+        <article class="card">
+          <div class="icon-box">$</div>
+          <h3>Fast &amp; Reliable</h3>
+          <p>Experience blazing fast performance with 99.9% uptime.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon-box">◎</div>
+          <h3>Team Collaboration</h3>
+          <p>Work together seamlessly with real-time updates and shared tasks.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon-box">▣</div>
+          <h3>Secure by Design</h3>
+          <p>Your data is securely protected with enterprise-grade security.</p>
+        </article>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>
