@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack-a-Mole</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            gap: 10px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        .cell {
+            width: 80px;
+            height: 80px;
+            font-size: 24px;
+            cursor: pointer;
+            background-color: white;
+            transition: background-color 0.2s ease;
+        }
+
+        .hit {
+            background-color: green;
+        }
+
+        .miss {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Whack-a-Mole</h1>
+    <p>Score: <span id="score">0</span></p>
+    <p>Time Left: <span id="time">30</span> s</p>
+    <button id="startBtn">Start Game</button>
+
+    <div class="grid" id="grid">
+        <button class="cell"></button>
+        <button class="cell"></button>
+        <button class="cell"></button>
+        <button class="cell"></button>
+        <button class="cell"></button>
+        <button class="cell"></button>
+        <button class="cell"></button>
+        <button class="cell"></button>
+        <button class="cell"></button>
+    </div>
+
+    <script>
+        const cells = document.querySelectorAll('.cell');
+        const scoreDisplay = document.getElementById('score');
+        const timeDisplay = document.getElementById('time');
+        const startBtn = document.getElementById('startBtn');
+
+        let score = 0;
+        let timeLeft = 30;
+        let activeIndex = -1;
+        let moveInterval = null;
+        let countdownInterval = null;
+        let gameRunning = false;
+
+        function updateScore() {
+            scoreDisplay.textContent = score;
+        }
+
+        function updateTime() {
+            timeDisplay.textContent = timeLeft;
+        }
+
+        function clearBoard() {
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.disabled = false;
+                cell.classList.remove('hit', 'miss');
+            });
+        }
+
+        function flashCell(index, className) {
+            const cell = cells[index];
+            if (!cell) return;
+
+            cell.classList.remove('hit', 'miss');
+            cell.classList.add(className);
+
+            setTimeout(() => {
+                cell.classList.remove(className);
+            }, 200);
+        }
+
+        function showMole() {
+            if (!gameRunning) return;
+
+            let randomIndex = Math.floor(Math.random() * cells.length);
+
+            while (randomIndex === activeIndex && cells.length > 1) {
+                randomIndex = Math.floor(Math.random() * cells.length);
+            }
+
+            activeIndex = randomIndex;
+
+            cells.forEach((cell, index) => {
+                cell.textContent = index === activeIndex ? 'Mole' : '';
+                cell.classList.remove('hit', 'miss');
+            });
+        }
+
+        function endGame() {
+            gameRunning = false;
+            clearInterval(moveInterval);
+            clearInterval(countdownInterval);
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.classList.remove('hit', 'miss');
+            });
+            activeIndex = -1;
+            alert('Time up! Your score is ' + score);
+        }
+
+        function handleCellClick(index) {
+            if (!gameRunning) return;
+
+            if (index === activeIndex) {
+                score++;
+                updateScore();
+                flashCell(index, 'hit');
+                showMole();
+            } else {
+                flashCell(index, 'miss');
+            }
+        }
+
+        function startGame() {
+            score = 0;
+            timeLeft = 30;
+            activeIndex = -1;
+            gameRunning = true;
+            updateScore();
+            updateTime();
+            clearBoard();
+            showMole();
+
+            clearInterval(moveInterval);
+            clearInterval(countdownInterval);
+
+            moveInterval = setInterval(showMole, 800);
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                updateTime();
+
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        cells.forEach((cell, index) => {
+            cell.addEventListener('click', () => handleCellClick(index));
+        });
+
+        startBtn.addEventListener('click', startGame);
+    </script>
+</body>
+</html>

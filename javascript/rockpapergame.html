@@ -3,17 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script>
-        
-    </script>
+    <title>Rock Paper Scissors</title>
 </head>
 <body>
     <h1>ROCK - PAPER - SCISSOR</h1>
-    <p>choose your weapon : </p>
-    <Input type="button" value="ROCK">
-    <Input type="button" value="PAPER">
-    <Input type="button" value="SCISSOR">
 
+    <div id="player1Section">
+        <p>Player 1, choose your weapon:</p>
+        <input type="button" value="ROCK" onclick="savePlayer1('ROCK')">
+        <input type="button" value="PAPER" onclick="savePlayer1('PAPER')">
+        <input type="button" value="SCISSOR" onclick="savePlayer1('SCISSOR')">
+    </div>
+
+    <div id="player2Section" style="display:none;">
+        <p>Player 2, choose your weapon:</p>
+        <input type="button" value="ROCK" onclick="playGame('ROCK')">
+        <input type="button" value="PAPER" onclick="playGame('PAPER')">
+        <input type="button" value="SCISSOR" onclick="playGame('SCISSOR')">
+    </div>
+
+    <p id="result"></p>
+
+    <script>
+        let player1Choice = "";
+
+        function savePlayer1(choice) {
+            player1Choice = choice;
+            document.getElementById("player1Section").style.display = "none";
+            document.getElementById("player2Section").style.display = "block";
+        }
+
+        function playGame(player2Choice) {
+            if (player1Choice === "") {
+                document.getElementById("result").textContent = "Player 1 must choose first.";
+                return;
+            }
+
+            if (player1Choice === player2Choice) {
+                document.getElementById("result").textContent = `It's a tie! Both players chose ${player1Choice}.`;
+            } else if (
+                (player1Choice === "ROCK" && player2Choice === "SCISSOR") ||
+                (player1Choice === "PAPER" && player2Choice === "ROCK") ||
+                (player1Choice === "SCISSOR" && player2Choice === "PAPER")
+            ) {
+                document.getElementById("result").textContent = `Player 1 wins! ${player1Choice} beats ${player2Choice}.`;
+            } else {
+                document.getElementById("result").textContent = `Player 2 wins! ${player2Choice} beats ${player1Choice}.`;
+            }
+        }
+    </script>
 </body>
 </html>
