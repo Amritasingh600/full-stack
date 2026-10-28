@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Card Match</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 90px);
+            gap: 10px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        .card {
+            width: 90px;
+            height: 90px;
+            font-size: 28px;
+            cursor: pointer;
+            border: 2px solid #333;
+            background-color: #ddd;
+            color: #000;
+        }
+
+        .card.flipped {
+            background-color: #fff;
+        }
+
+        .card.matched {
+            background-color: #90ee90;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+    <h1>Memory Card Match</h1>
+    <div class="grid" id="grid"></div>
+
+    <script>
+        const symbols = ['🍎', '🍇', '🍉', '🍋', '🍊', '🍒', '🍍', '🥝'];
+        const cards = [...symbols, ...symbols];
+
+        let shuffledCards = [];
+        let flippedCards = [];
+        let lockBoard = false;
+        let matchedPairs = 0;
+
+        function shuffle(array) {
+            const copy = [...array];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function createBoard() {
+            shuffledCards = shuffle(cards);
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+
+            shuffledCards.forEach((symbol, index) => {
+                const button = document.createElement('button');
+                button.className = 'card';
+                button.textContent = '?';
+                button.dataset.symbol = symbol;
+                button.dataset.index = index;
+
+                button.addEventListener('click', () => flipCard(button, symbol));
+                grid.appendChild(button);
+            });
+        }
+
+        function flipCard(card, symbol) {
+            if (lockBoard || card.classList.contains('flipped') || card.classList.contains('matched')) {
+                return;
+            }
+
+            card.textContent = symbol;
+            card.classList.add('flipped');
+            flippedCards.push(card);
+
+            if (flippedCards.length === 2) {
+                lockBoard = true;
+
+                const [firstCard, secondCard] = flippedCards;
+
+                if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
+                    firstCard.classList.add('matched');
+                    secondCard.classList.add('matched');
+                    flippedCards = [];
+                    matchedPairs++;
+                    lockBoard = false;
+
+                    if (matchedPairs === symbols.length) {
+                        setTimeout(() => {
+                            alert('You won!');
+                        }, 300);
+                    }
+                } else {
+                    setTimeout(() => {
+                        firstCard.textContent = '?';
+                        secondCard.textContent = '?';
+                        firstCard.classList.remove('flipped');
+                        secondCard.classList.remove('flipped');
+                        flippedCards = [];
+                        lockBoard = false;
+                    }, 1000);
+                }
+            }
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>

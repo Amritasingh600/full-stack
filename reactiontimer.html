@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .reaction-box {
+            width: 300px;
+            height: 150px;
+            border: 2px solid black;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #ddd;
+        }
+
+        .reaction-box.green {
+            background-color: green;
+            color: white;
+        }
+
+        .reaction-box.red {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reaction Timer</h1>
+    <div id="reactionBox" class="reaction-box">Wait for green...</div>
+    <p>Time: <span id="reactionTime">0</span> ms</p>
+    <p>Best: <span id="bestTime">--</span> ms</p>
+
+    <script>
+        const reactionBox = document.getElementById('reactionBox');
+        const reactionTimeDisplay = document.getElementById('reactionTime');
+        const bestTimeDisplay = document.getElementById('bestTime');
+
+        let reactionStarted = false;
+        let reactionTimer = null;
+        let startTime = 0;
+        let bestTime = Number(localStorage.getItem('reactionBestTime')) || null;
+
+        function updateBestTime() {
+            bestTimeDisplay.textContent = bestTime === null ? '--' : bestTime;
+        }
+
+        function startReactionTest() {
+            clearTimeout(reactionTimer);
+            reactionStarted = false;
+            reactionTimeDisplay.textContent = '0';
+            reactionBox.textContent = 'Wait for green...';
+            reactionBox.classList.remove('green', 'red');
+
+            reactionTimer = setTimeout(() => {
+                reactionStarted = true;
+                startTime = Date.now();
+                reactionBox.textContent = 'CLICK!';
+                reactionBox.classList.add('green');
+            }, Math.random() * 3000 + 2000);
+        }
+
+        function handleReactionClick() {
+            if (!reactionStarted) {
+                clearTimeout(reactionTimer);
+                reactionBox.textContent = 'Too early!';
+                reactionBox.classList.add('red');
+                reactionStarted = false;
+                setTimeout(startReactionTest, 800);
+                return;
+            }
+
+            const reactionDelay = Date.now() - startTime;
+            reactionTimeDisplay.textContent = reactionDelay;
+            reactionBox.textContent = 'Clicked!';
+            reactionBox.classList.remove('green');
+
+            if (bestTime === null || reactionDelay < bestTime) {
+                bestTime = reactionDelay;
+                localStorage.setItem('reactionBestTime', bestTime);
+                updateBestTime();
+            }
+
+            reactionStarted = false;
+            setTimeout(startReactionTest, 800);
+        }
+
+        reactionBox.addEventListener('click', handleReactionClick);
+        updateBestTime();
+        startReactionTest();
+    </script>
+</body>
+</html>
