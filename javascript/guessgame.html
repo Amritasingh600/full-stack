@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Guess Number Game</title>
+</head>
+<body>
+	<h2>Guess the Number (1 to 100)</h2>
+	<p>You have 7 tries.</p>
+
+	<input type="number" id="guessInput" min="1" max="100" placeholder="Enter a number">
+	<button onclick="checkGuess()">Guess</button>
+
+	<p id="message"></p>
+	<p id="triesLeft">Tries left: 7</p>
+
+	<script>
+		let targetNumber;
+		let triesLeft;
+		let gameOver;
+
+		function startGame() {
+			targetNumber = Math.floor(Math.random() * 100) + 1;
+			triesLeft = 7;
+			gameOver = false;
+			document.getElementById("message").textContent = "";
+			document.getElementById("triesLeft").textContent = "Tries left: " + triesLeft;
+			document.getElementById("guessInput").value = "";
+		}
+
+		function checkGuess() {
+			if (gameOver) {
+				return;
+			}
+
+			const input = document.getElementById("guessInput");
+			const message = document.getElementById("message");
+			const guess = Number(input.value);
+
+			if (!Number.isInteger(guess) || guess < 1 || guess > 100) {
+				message.textContent = "Enter a whole number between 1 and 100.";
+				return;
+			}
+
+			triesLeft--;
+
+			if (guess === targetNumber) {
+				message.textContent = "Correct! You guessed the number.";
+				gameOver = true;
+			} else if (triesLeft === 0) {
+				message.textContent = "Out of tries. The number was " + targetNumber + ".";
+				gameOver = true;
+			} else if (guess < targetNumber) {
+				message.textContent = "Too low.";
+			} else {
+				message.textContent = "Too high.";
+			}
+
+			document.getElementById("triesLeft").textContent = "Tries left: " + triesLeft;
+			input.value = "";
+		}
+
+		startGame();
+	</script>
+</body>
+</html>

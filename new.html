@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            display:grid;
+            grid-template-columns: 100px 100px 100px;
+            grid-template-rows: 100px 100px 100px;
+            gap:20px;
+        }
+        .box1{
+            grid-column:1/3;
+            grid-row:1/4;
+            border-radius:10px 10px 0px 0px;
+            background:linear-gradient(1000deg,rgb(198, 90, 248),pink);
+        }
+        .box{
+            width:100px;
+            height:100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="width:500px; height:500px;">
+        <div class="box1 box" style="width:auto; height:auto;"></div>
+        <p>Minimal desk</p>
+        </div>
+        <div class="box2 box"></div>
+        <div class="box3 box"></div>
+        <div class="box4 box"></div>
+        <div class="box5 box"></div>
+        <div class="box6 box"></div>
+        <div class="box7 box"></div>
+        <div class="box8 box"></div>
+        <div class="box9 box"></div>
+    </div>
+</body>
+</html>
